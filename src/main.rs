@@ -425,11 +425,8 @@ impl KeyMap {
 }
 
 fn read_json_file<P: AsRef<Path>>(path: P) -> Result<Value> {
-    let file = File::open(path)?;
-    let reader = BufReader::new(file);
-
-    let value = serde_json::from_reader(reader)?;
-
+    let contents = std::fs::read_to_string(path)?;
+    let value = serde_json::from_str(&contents)?;
     Ok(value)
 }
 
